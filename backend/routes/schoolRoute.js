@@ -15,4 +15,7 @@ route.post('/add-department/:id', controller.add_department)
 
 route.post('/add-project/:id',upload.single('files'),  controller.add_project)
 
+route.post('/upload',upload.single('file'), (req,res,nex) =>{
+    console.log(req.file)
+})
 export default route
