@@ -1,6 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 import schoolRoute from './routes/schoolRoute.js'
+import userRoute from './routes/userRoute.js'
+// dotenv.config()
+
 const app = express()
 
 mongoose.connect('mongodb://localhost/project-app')

@@ -1,14 +1,16 @@
 import multer from "multer";
 
 const Storage = multer.diskStorage({
-    destination: (err,req,cb) =>{
-        cb(null, 'upload')
+    destination: (req,file,cb) =>{
+        cb(null, 'uploads')
     },
-    filename: (err,req,cb) =>{
-        const ext = req.filename.lastIndexOf('.')
-        cb(null, new Date + '-' + req.fieldname + ext)
+    filename: (req,file,cb) =>{
+        const ext =file.originalname.substr(file.originalname.lastIndexOf('.'))
+        cb(null, file.originalname + Date.now() +  '-' + req.fieldname + ext)
     }
 })
 
-const storage =Storage
+const storage =multer({storage:Storage})
+
+export default storage
 

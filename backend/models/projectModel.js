@@ -1,6 +1,19 @@
 import mongoose from 'mongoose'
 
 const project = new mongoose.Schema({
+    fileName:{
+        type: String,
+        required: true,
+    },
+    contentType:{
+        type: String,
+        required: true,
+    },
+    base64:{
+        type: String,
+        required: true,
+        select: false
+    },
     projectName:{
         type: String,
         required: true,
@@ -22,6 +35,8 @@ const project = new mongoose.Schema({
         type: String,
         required: true,
     },
+    
+
     comment: [{
         type: mongoose.Types.ObjectId,
         ref: 'comment'

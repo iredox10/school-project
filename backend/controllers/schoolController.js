@@ -1,3 +1,4 @@
+import {readFileSync} from 'fs'
 import School from '../models/schoolModel.js'
 import Department from '../models/departmentModel.js'
 import Project from '../models/projectModel.js'
@@ -35,12 +36,24 @@ export const add_department = async (req,res,next) =>{
 
 
 export const add_project = async (req,res,next) =>{
-    try {
-        const project = await Project.create(req.body)
-        const department = await Department.findById(req.params.id)
-        department.projects.push(project)
-        res.json({project,project})
-    } catch (err) {
+        let file = req.file
+        let pdf = readFileSync(file.path)
+        let encodedPdf =  pdf.toString('base64')
+    let project = {
+        fileName : file.originalname,
+        contentType:file.mimetype,
+        base64: encodedPdf,
+        projectName: req.body.projectName,
+        program: req.body.program,
+        year: req.body.year,
+        authors: req.body.authors,
+        supervisor: req.body.supervisor,
+    }
+    let newProject = new Project(project)
+    try{
+    let savedProject = await newProject.save()
+    res.json(savedProject)
+    } catch(err) {
         next(err)
     }
 }

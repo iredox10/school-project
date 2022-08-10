@@ -20,11 +20,13 @@ const user = new mongoose.Schema({
     },
     regNumber:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email:{
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     password:{
         type: String,
@@ -33,6 +35,6 @@ const user = new mongoose.Schema({
     favourites:Array
 })
 
-const userModel = mongoose.model('user', user)
+const userModel = mongoose.model('user',user)
 
 export default userModel
