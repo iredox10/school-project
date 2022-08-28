@@ -35,8 +35,6 @@ const project = new mongoose.Schema({
         type: String,
         required: true,
     },
-    
-
     comment: [{
         type: mongoose.Types.ObjectId,
         ref: 'comment'

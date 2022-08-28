@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcryptjs'
+
 const signJwt = (id) =>{
     return jwt.sign({id:id},'secret-key',{expiresIn: '1d'})
 }
@@ -32,8 +33,8 @@ export const log_in = async (req,res,next) =>{
         if(!user){
             res.json('wrong credentials')
         }
-        const password = await bcrypt.compare(email,user.email)
-        if(req.body.email === user.password){
+        const password = await bcrypt.compare(req.body.password,user.password)
+        if(password === user.password){
             const jwt = signJwt(user.id)
             res.json({user,jwt})
         }
@@ -43,3 +44,27 @@ export const log_in = async (req,res,next) =>{
     }
 }
 
+export const comment = async (req,res,next) =>{
+    try {
+        const user = await User.find(req.params.id)
+        const project = await Project.findById(req.params.id)
+        const comment = await Comment.create({
+            comment: req.body.comment,
+            user:user
+        })
+        projects.push(comment)
+    } catch (err) {
+        
+    }
+}
+
+export const add_favourite = async (req,res,next) =>{
+    try{
+        const user = await User.findById(req.params.id)
+        const project = await Project.findById(req.params.id)
+        const favourites = user.updateOne({$push: project})
+        res.json(user)
+    }catch(err){
+        next(err)
+    }
+}

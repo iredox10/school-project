@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
 
 const comment = new mongoose.Schema({
-    fullName:{
+    comment:{
         type: String,
         required: true
     },
-    shortName:{
-        type: String,
-        required: true
-    },
+    user:{
+        type: mongoose.Types.ObjectId,
+        ref: 'user'
+    }
 })
 
 const commentModel = mongoose.model('comment', comment)
